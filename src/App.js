@@ -30,7 +30,9 @@ class BooksApp extends React.Component {
         id: s.id,
         name: s.name
       }
-    })
+    },),
+    loading : true
+
   }
 
   
@@ -39,7 +41,7 @@ class BooksApp extends React.Component {
   async componentDidMount()
   {
     const shelfs  = await this.bindApiShelfBooks()
-    this.setState({shelfs})
+    this.setState({shelfs,loading:false})
   }
 
   /* Life Cycle Events*/ 
@@ -52,7 +54,7 @@ class BooksApp extends React.Component {
    *
    * @returns {Object} que representa as estantes com seus respectivos livros
    */
-  bindApiShelfBooks()
+  bindApiShelfBooks = ()=>
   {
    
   /**
@@ -163,6 +165,7 @@ class BooksApp extends React.Component {
     {
       return function(shelf) 
       {
+        shelf.loading = false;
         return shelfs.filter(s => s.id !== book.shelf).concat(shelf)
       }
     }
@@ -178,12 +181,13 @@ class BooksApp extends React.Component {
   onChangeBookShelf = (book,e) =>
   {
       e.preventDefault();
+      this.setState({loading:true})
       const shelf = e.target.value
       BooksAPI.update(book,shelf).then(() => {
         book.shelf   = shelf
         const books  =  _.flatMap(this.state.shelfs.map(s => s.books)).filter(b => b.id !== book.id).concat(book)
         const shelfs = this.bindShelfs(books)
-        this.setState({shelfs})
+        this.setState({shelfs,loading:false})
       })
       
   }
