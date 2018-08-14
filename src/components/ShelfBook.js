@@ -2,6 +2,13 @@ import React from "react"
 import Book from "./Book"
 import PropTypes from 'prop-types';
 
+/**
+* @description Representa uma Estante
+* @constructor
+* @param {Object} shelf -  Representa a estante
+* @param {Array} options - Opções de estantes para a troca do livro
+* @param {Function} onChangeBookShelf - Função responsável por atualizar a estante de um livro
+*/
 const ShelfBook = ({shelf,options, onChangeBookShelf})=> {
     return (
         <div className="bookshelf">

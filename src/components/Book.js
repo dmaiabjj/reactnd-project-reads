@@ -2,6 +2,13 @@ import React from "react"
 import ShelfBookChanger from "./ShelfBookChanger"
 import PropTypes from 'prop-types';
 
+/**
+* @description Representa um livro
+* @constructor
+* @param {Object} book -  Representa um livro
+* @param {Array} options - Opções de estantes para a troca do livro
+* @param {Function} onChangeBookShelf - Função responsável por atualizar a estante de um livro
+*/
 const Book = ({book,options, onChangeBookShelf}) => {
     const dStyle = {
         width: 128,
