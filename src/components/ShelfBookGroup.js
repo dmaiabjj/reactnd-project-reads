@@ -14,15 +14,13 @@ const ShelfBookGroup = ({shelfs,options,onChangeBookShelf,loading})=> {
             </div>
             <div className="list-books-content">
                 <div>
-                <If test={loading} component={ <LinearProgress/>} >
+                    <If test={loading} component={ <LinearProgress/>}>
                     {
-                         _.orderBy(shelfs, ['order']).map(shelf => 
-                            {
-                                return <ShelfBook key={shelf.id} shelf={shelf} options={options} onChangeBookShelf={onChangeBookShelf}/>
-                            })
+                        _.orderBy(shelfs, ['order']).map(shelf => {
+                            return <ShelfBook key={shelf.id} shelf={shelf} options={options} onChangeBookShelf={onChangeBookShelf}/>
+                        })
                     }
-                            
-                </If>
+                    </If>
                 </div>
             </div>
             <AddBook/>

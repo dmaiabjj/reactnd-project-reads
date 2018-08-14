@@ -9,21 +9,19 @@ import {pipe} from "./helpers/Helpers"
 
 class BooksApp extends React.Component {
   /**
-   * Definindo as estantes padrões que serão mostradas sempre
+   * @description Definindo as estantes padrões que serão mostradas sempre
    * 
    * @returns {Array} de objetos shelf, contendo as definições padrões da estante
    */
-  shelfs = () => 
-  {
+  shelfs = () => {
     return [
       {id:"currentlyReading",name:"Currently Reading",books:[],order:1},
       {id:"wantToRead",name:"Want To Read",books:[],order:2},
       {id:"read",name:"Read",books:[],order:3}
-    ]
+    ];
   }
 
-  state = 
-  {
+  state = {
     shelfs  : this.shelfs(),
     options : this.shelfs().map((s) => {
       return {
@@ -32,16 +30,14 @@ class BooksApp extends React.Component {
       }
     },),
     loading : true
-
-  }
+  };
 
   
   
   /* Life Cycle Events*/ 
-  async componentDidMount()
-  {
-    const shelfs  = await this.bindApiShelfBooks()
-    this.setState({shelfs,loading:false})
+  async componentDidMount() {
+    const shelfs  = await this.bindApiShelfBooks();
+    this.setState({shelfs,loading:false});
   }
 
   /* Life Cycle Events*/ 
@@ -49,16 +45,15 @@ class BooksApp extends React.Component {
   /* Methods to bind Shelf*/ 
   
   /**
-   * Faz a chamada pra API retornando todos livros do usuário
+   * @description Faz a chamada pra API retornando todos livros do usuário
    * e retorna o objeto que representa as estantes
    *
    * @returns {Object} que representa as estantes com seus respectivos livros
    */
-  bindApiShelfBooks = ()=>
-  {
+  bindApiShelfBooks = () => {
    
   /**
-   * Pega os livros no formato padrão da API e converte para um formato mais sucinto, 
+   * @description Pega os livros no formato padrão da API e converte para um formato mais sucinto, 
    * contendo apenas as propriedades que serão utilizadas
    * @param   {Array} books  todos os livros da estante
    *
@@ -74,8 +69,8 @@ class BooksApp extends React.Component {
           authors : book.authors.join(","),
           image   : book.imageLinks.smallThumbnail,
           shelf   : book.shelf
-        }
-      })
+        };
+      });
       
     }
 
@@ -84,17 +79,16 @@ class BooksApp extends React.Component {
   
 
   /**
-   * Pega os livros do usuário já convertidos no formato da app 
+   * @description Pega os livros do usuário já convertidos no formato da app 
    * e retorna o objeto que representa as estantes
    * @param   {Array} books  todos os livros da estante do usuário
    *
    * @returns {Object} que representa as estantes com seus respectivos livros
    */
-  bindShelfs = (books)=>
-  {
-    const self = this
+  bindShelfs = (books) => {
+    const self = this;
 
-    return filter(books).reduce(createInitialObj,this.shelfs())
+    return filter(books).reduce(createInitialObj,this.shelfs());
 
    /**
    * Pega os livros do usuário e retorna somente os livros que se encontram nas estantes que default
@@ -102,92 +96,83 @@ class BooksApp extends React.Component {
    *
    * @returns {Array} retorna os livros filtrados
    */
-    function filter(books)
-    {
-      const shelf = self.shelfs().map(s => s.id)
-      return books.filter((b) => shelf.includes(b.shelf))
+    function filter(books) {
+      const shelf = self.shelfs().map(s => s.id);
+      return books.filter((b) => shelf.includes(b.shelf));
     }
 
 
   /**
-   * Cria o objeto padrão da app, que representa as estantes com seus livros
+   * @description Cria o objeto padrão da app, que representa as estantes com seus livros
    * @param   {Object} shelfs objeto que representa as estantes
    * @param   {Array} books  todos os livros do usuário
    *
    * @returns {Object} que representa as estantes com seus respectivos livros
    */
-    function createInitialObj(shelfs,book)
-    {
-        const find    = findShelf(book)
-        const add     = addBookOnShelf(book)
-        const update  = updateShelf(book,shelfs)
+    function createInitialObj(shelfs,book) {
+        const find    = findShelf(book);
+        const add     = addBookOnShelf(book);
+        const update  = updateShelf(book,shelfs);
         
-        return pipe(find,add,update)(shelfs)
+        return pipe(find,add,update)(shelfs);
     }
 
     /**
-     * Clojure que retorna uma função que retorna a estante onde o livro passado se encontra
+     * @description Clojure que retorna uma função que retorna a estante onde o livro passado se encontra
      * @param   {Object} book objeto que representa um livro em específico
      *
      * @returns {Function} que recebe as estantes e retorna a estante especifica do livro passado anteriormente
      */
-    function findShelf(book)
-    {
-      return function(shelfs=[]) 
-      {
-        return shelfs.find(s => s.id === book.shelf)
-      }
+    function findShelf(book) {
+      return function(shelfs=[]) {
+        return shelfs.find(s => s.id === book.shelf);
+      };
     }
 
     /**
-     * Clojure que retorna uma função que adiciona o livro em sua estante
+     * @description Clojure que retorna uma função que adiciona o livro em sua estante
      * @param   {Object} book objeto que representa um livro em específico
      *
      * @returns {Function} recebe a estante responsável pelo livro passado anteriormente e o adiciona
      */
-    function addBookOnShelf(book) 
-    {
-        return function(shelf) 
-        {
-          shelf.books.push(book)
+    function addBookOnShelf(book) {
+        return function(shelf) {
+          shelf.books.push(book);
           return shelf;
-        }
+        };
     }
 
     /**
-     * Clojure que retorna uma função que adiciona o livro em sua estante
+     * @description Clojure que retorna uma função que adiciona o livro em sua estante
      * @param   {Object} book objeto que representa um livro em específico
      * @param   {Object} shelfs objeto que representa as estantes
      *
      * @returns {Function} recebe a estante e atualiza a lista de livros com o livro passado anteriormente atualizado
      */
-    function updateShelf(book,shelfs)
-    {
-      return function(shelf) 
-      {
+    function updateShelf(book,shelfs) {
+      return function(shelf) {
         shelf.loading = false;
-        return shelfs.filter(s => s.id !== book.shelf).concat(shelf)
-      }
+        return shelfs.filter(s => s.id !== book.shelf).concat(shelf);
+      };
     }
 
   }
 
 
   /**
-     * Atualiza a estante de um livro específico e gera novamente o objeto que representa todas as estantes e atualiza o State
+     * @description Atualiza a estante de um livro específico e gera novamente o objeto que representa todas as estantes e atualiza o State
      * @param   {Object} book objeto que representa um livro a ser atualizado
      * @param   {Event} e objeto do evento responsável pela atualização da estante do livro em questão
   */
-  onChangeBookShelf = (book,e) =>
-  {
+  onChangeBookShelf = (book,e) =>{
       e.preventDefault();
-      this.setState({loading:true})
-      const shelf = e.target.value
+      this.setState({loading:true});
+      const shelf = e.target.value;
       BooksAPI.update(book,shelf).then(() => {
-        book.shelf   = shelf
-        const books  =  _.flatMap(this.state.shelfs.map(s => s.books)).filter(b => b.id !== book.id).concat(book)
-        const shelfs = this.bindShelfs(books)
-        this.setState({shelfs,loading:false})
+        book.shelf   = shelf;
+        const books  =  _.flatMap(this.state.shelfs.map(s => s.books)).filter(b => b.id !== book.id).concat(book);
+        const shelfs = this.bindShelfs(books);
+        this.setState({shelfs,loading:false});
       })
       
   }
@@ -202,7 +187,7 @@ class BooksApp extends React.Component {
         }
         />
         <Route exact path="/add" render={() => (
-          <SearchBook/>
+          <SearchBook {...this.state} onChangeBookShelf={this.onChangeBookShelf}/>
         )}
         />
         </div>
