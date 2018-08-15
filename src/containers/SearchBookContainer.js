@@ -15,31 +15,54 @@ class SearchBookContainer extends React.Component {
     state = { query: "",books:[],loading : false };
     
 
+    /**
+    * @description Chama a API buscando os livros relacionado ao termo passado
+    * @param   {string} query termo para efetuar a busca de livros
+    * @param   {Array} books  todos os livros do usuário
+    */
     searchQuery = _.debounce((query) => {
         this.setState({query,loading:true});
         BooksAPI.search(query).then((items) => {
-            const books = Array.isArray(items) ? transformBook(items) : [];
+            return Array.isArray(items) ? transformBook(items) : [];
+        }).then((books) => {
+            const collection   = this.props.collection();
+            const intersection = _.intersectionBy(collection, books, 'id');
+            books = _.unionBy(intersection,books,'id');
             this.setState({books,loading:false});
         }).catch((error) => {
             console.log("Error",error);
         });
-    }, 300);
+    }, 100);
 
 
+    /**
+    * @description Verifica se o termo para a busca está vazio e atualiza o state
+    * @param   {string} query termo para efetuar a busca de livros
+    *
+    * @returns {string} retorna o próprio termo
+    */
     isEmpty = (query) => {
         !_.isEmpty(query) || this.setState({query,loading:false,books:[]});
         return query;
     }
 
+    /**
+    * @description Verifica se o termo para a busca não é vazio e atualiza o state
+    * @param   {string} query termo para efetuar a busca de livros
+    */
     hasValue = (query) => {
-        _.isEmpty(query) || this.searchQuery(query)
+        _.isEmpty(query) || this.searchQuery(query);
     }
 
 
+    /**
+    * @description Efetua os passos a serem efetuadas antes de chamar a API de busca de livros
+    * @param  {Event} event objeto do evento responsável pela atualização do termo da busca
+    */
     onInputSearchChange = (event) => {
         event.preventDefault();
         const query = event.target.value;
-        pipe(this.isEmpty,this.hasValue)(query)
+        pipe(this.isEmpty,this.hasValue)(query);
     }
     
     render() {
@@ -48,8 +71,9 @@ class SearchBookContainer extends React.Component {
   }
 
   SearchBookContainer.propTypes = {
-   onChangeBookShelf: PropTypes.func.isRequired,
-   options: PropTypes.array.isRequired
+    collection: PropTypes.func.isRequired,
+    onChangeBookShelf: PropTypes.func.isRequired,
+    options: PropTypes.array.isRequired
 }
 
 export default SearchBookContainer
