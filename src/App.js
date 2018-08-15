@@ -29,7 +29,9 @@ class BooksApp extends React.Component {
         name: s.name
       }
     },),
-    loading : true
+    loading : true,
+    query: "",
+    books:[]
   };
 
   
@@ -162,12 +164,12 @@ class BooksApp extends React.Component {
   /**
      * @description Atualiza a estante de um livro específico e gera novamente o objeto que representa todas as estantes e atualiza o State
      * @param   {Object} book objeto que representa um livro a ser atualizado
-     * @param   {Event} e objeto do evento responsável pela atualização da estante do livro em questão
+     * @param   {Event} event objeto do evento responsável pela atualização da estante do livro em questão
   */
-  onChangeBookShelf = (book,e) =>{
-      e.preventDefault();
+  onChangeBookShelf = (book,event) =>{
+     event.preventDefault();
       this.setState({loading:true});
-      const shelf = e.target.value;
+      const shelf = event.target.value;
       BooksAPI.update(book,shelf).then(() => {
         book.shelf   = shelf;
         const books  =  _.flatMap(this.state.shelfs.map(s => s.books)).filter(b => b.id !== book.id).concat(book);
@@ -179,16 +181,20 @@ class BooksApp extends React.Component {
 
   /* Methods to bind Shelf*/ 
 
+  onInputSearchChange = (event) => {
+    this.setState({query : event.target.value});
+  }
+
   render() {
     return (
       <div className="app">
         <Route exact path="/" render={() => 
-          <ShelfBookGroup {...this.state} onChangeBookShelf={this.onChangeBookShelf} />
+          <ShelfBookGroup shelfs={this.state.shelfs} options={this.state.options} loading={this.state.loading} onChangeBookShelf={this.onChangeBookShelf} />
         }
         />
-        <Route exact path="/add" render={() => (
-          <SearchBook {...this.state} onChangeBookShelf={this.onChangeBookShelf}/>
-        )}
+        <Route exact path="/add" render={() => 
+          <SearchBook query ={this.state.query} onInputSearchChange={this.onInputSearchChange} onChangeBookShelf={this.onChangeBookShelf}/>
+        }
         />
         </div>
     )
