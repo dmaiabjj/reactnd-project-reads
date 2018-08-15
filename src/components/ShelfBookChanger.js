@@ -12,7 +12,7 @@ import PropTypes from 'prop-types';
 const ShelfBookChanger = ({book,options,onChangeBookShelf})=>{
     return (
         <div className="book-shelf-changer">
-            <select value={book.shelf} onChange={(e) => {onChangeBookShelf(book,e)}}>
+            <select value={book.shelf || "none"} onChange={(e) => {onChangeBookShelf(book,e)}}>
                 <option value="move" disabled>Move to...</option>
                 {
                     options.map(option => {

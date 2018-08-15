@@ -3,9 +3,10 @@ import * as BooksAPI from './BooksAPI'
 import "./App.css"
 import { Route } from "react-router-dom"
 import ShelfBookGroup from "./components/ShelfBookGroup"
-import SearchBook from "./components/SearchBook"
+import SearchBookContainer from "./containers/SearchBookContainer"
 import _ from "lodash"
 import {pipe} from "./helpers/Helpers"
+import {transformBook} from "./utils/Util"
 
 class BooksApp extends React.Component {
   /**
@@ -29,9 +30,7 @@ class BooksApp extends React.Component {
         name: s.name
       }
     },),
-    loading : true,
-    query: "",
-    books:[]
+    loading : true
   };
 
   
@@ -53,30 +52,7 @@ class BooksApp extends React.Component {
    * @returns {Object} que representa as estantes com seus respectivos livros
    */
   bindApiShelfBooks = () => {
-   
-  /**
-   * @description Pega os livros no formato padrão da API e converte para um formato mais sucinto, 
-   * contendo apenas as propriedades que serão utilizadas
-   * @param   {Array} books  todos os livros da estante
-   *
-   * @returns {Array} de livros no formato novo
-   */
-    function transformBook(books)
-    {
-      return books.map((book) => {
-        return {
-          id      : book.id,
-          title   : book.title,
-          description : book.description,
-          authors : book.authors.join(","),
-          image   : book.imageLinks.smallThumbnail,
-          shelf   : book.shelf
-        };
-      });
-      
-    }
-
-    return BooksAPI.getAll().then(transformBook).then(this.bindShelfs);
+   return BooksAPI.getAll().then(transformBook).then(this.bindShelfs);
   }
   
 
@@ -181,10 +157,6 @@ class BooksApp extends React.Component {
 
   /* Methods to bind Shelf*/ 
 
-  onInputSearchChange = (event) => {
-    this.setState({query : event.target.value});
-  }
-
   render() {
     return (
       <div className="app">
@@ -193,7 +165,7 @@ class BooksApp extends React.Component {
         }
         />
         <Route exact path="/add" render={() => 
-          <SearchBook query ={this.state.query} onInputSearchChange={this.onInputSearchChange} onChangeBookShelf={this.onChangeBookShelf}/>
+          <SearchBookContainer onChangeBookShelf={this.onChangeBookShelf} options={this.state.options}/>
         }
         />
         </div>
