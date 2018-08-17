@@ -1,14 +1,16 @@
 import React from "react"
 import PropTypes from 'prop-types';
 
-
 /**
-* @description Componente que demonstra as estantes atuais para a troca do livro
+* @description 
+* Representa a o componente responsável pela adição/troca de um livro para uma estante
+*
 * @constructor
-* @param {Object} book -  Representa um livro
-* @param {Array} options - Opções de estantes para a troca do livro
-* @param {Function} onChangeBookShelf - Função responsável por atualizar a estante de um livro
+* @param {Object}   book                Livro
+* @param {Array}    options             Lista de estantes para adição/troca de um livro
+* @param {Function} onChangeBookShelf   Função responsável por efetuar a adição/troca do livro para uma estante
 */
+
 const ShelfBookChanger = ({book,options,onChangeBookShelf})=>{
     return (
         <div className="book-shelf-changer">

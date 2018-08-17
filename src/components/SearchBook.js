@@ -3,17 +3,21 @@ import {Link} from "react-router-dom"
 import BookGrid from "./BookGrid"
 import LinearProgress from '@material-ui/core/LinearProgress';
 import If from "../components/If"
+import PropTypes from 'prop-types';
 
 /**
-* @description Representa o grid de livros
+* @description 
+* Componente que representa a página de busca
+*
 * @constructor
-* @param {Array} books -  Representa a estante
-* @param {Array} options - Opções de estantes para a troca do livro
-* @param {Function} onChangeBookShelf - Função responsável por atualizar a estante de um livro
-* @param {Function} onInputSearchChange - Função responsável por atualizar a query no state e fazer a busca via API
-* @param {String} query - Termo a ser procurado na API de busca
-* @param {boolean} loading - Parâmetro que indica se a app está processando as informações
+* @param {Array}    books               Lista de livros
+* @param {Array}    options             Lista de estantes para adição/troca de um livro
+* @param {Function} onChangeBookShelf   Função responsável por efetuar a adição/troca do livro para uma estante
+* @param {Function} onInputSearchChange Função responsável por atualizar a query e fazer a busca na API
+* @param {String}   query               Termo a ser procurado na API de busca
+* @param {boolean}  loading             Indica se a app está processando as informações
 */
+
 const SearchBook = ({books,options,onChangeBookShelf,onInputSearchChange,query,loading}) =>
 {
   return (
@@ -31,6 +35,15 @@ const SearchBook = ({books,options,onChangeBookShelf,onInputSearchChange,query,l
             </div>
         </div>
     )
+}
+
+SearchBook.propTypes = {
+  books: PropTypes.array.isRequired,
+  options: PropTypes.array.isRequired,
+  onChangeBookShelf: PropTypes.func.isRequired,
+  onInputSearchChange: PropTypes.func.isRequired,
+  query: PropTypes.string.isRequired,
+  loading: PropTypes.bool.isRequired
 }
 
 export default SearchBook

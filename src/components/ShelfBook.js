@@ -2,13 +2,17 @@ import React from "react"
 import BookGrid from "./BookGrid"
 import PropTypes from 'prop-types';
 
+
 /**
-* @description Representa uma Estante
+* @description 
+* Representa a unidade Estante
+*
 * @constructor
-* @param {Object} shelf -  Representa a estante
-* @param {Array} options - Opções de estantes para a troca do livro
-* @param {Function} onChangeBookShelf - Função responsável por atualizar a estante de um livro
+* @param {Object}   shelf               Estante
+* @param {Array}    options             Lista de estantes para adição/troca de um livro
+* @param {Function} onChangeBookShelf   Função responsável por efetuar a adição/troca do livro para uma estante
 */
+
 const ShelfBook = ({shelf,options, onChangeBookShelf})=> {
     return (
         <div className="bookshelf">

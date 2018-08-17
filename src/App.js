@@ -20,16 +20,11 @@ class BooksApp extends React.Component {
   componentDidMount() {
     this.bindApiShelfBooks();
   }
-
   /* Life Cycle Events*/ 
 
-  /* Methods to bind Shelf*/ 
-  
-  /**
-   * @description Faz a chamada pra API retornando todos livros do usuário
-   * e retorna o objeto que representa as estantes
-   *
-   * @returns {Object} que representa as estantes com seus respectivos livros
+   /**
+   * @description 
+   * Efetua uma chamada pra API retornando os livros contidos nas estantes padrões e adiciona no estado da aplicação
    */
   bindApiShelfBooks = () => {
    return BooksAPI.getAll().then(transformBook).then(bindShelfs).then((shelfs) => {
@@ -45,27 +40,35 @@ class BooksApp extends React.Component {
   }
 
   /**
-   * @description Retorna todos os livros das estantes do usuário
+   * @description 
+   * Efetua uma varredura nas estantes contidas no estado da aplicação e retorna a lista contendo todos os livros
    *
-   * @returns {Array} lista livros
+   * @returns {Array} Lista de livros
    */
   getBooks = () => {
     return _.flatMap(this.state.shelfs.map(s => s.books));
   }
 
   /**
-   * @description Gera um array de objetos que representa a estante com seus respectivos livros
-   * @param   {Array} books todos os livros do usuário
-   * @returns {Array} lista das estantes do usuário com seus livros
-   */
+  * @description 
+  * Recebe uma lista de livros, agrupando - os cada um em sua respectiva estante, gerando um objeto
+  * representando a estante e seus livros, adicionando em um lista que irá ser retornada
+  * 
+  * @param   {Array} books   Lista de livros
+  *
+  * @returns {Array}         Lista contendo objetos representando uma estante com seus livros
+  */
   bind = (books) => {
     return bindShelfs(books);
   }
 
   /**
-   * @description Clojure que retorna a lista de livros com o livro atualizado anteriormente setado
-   * @param   {Object} book Livro a ser atualizado na lista de livros
-   * @returns {Function} Função que recebe uma lista de livros e atualiza com o livro pré-setado
+   * @description 
+   * Recebe um livro e retorna uma função que irá receber uma lista de livros
+   * 
+   * @param   {Object} book   Livro
+   *
+   * @returns {Function} Função que irá receber uma lista de livros e irá atualizar o livro passado anteriormente dentro dessa lista
    */
   filterBook = (book) => {
     return function(books) {
@@ -74,17 +77,22 @@ class BooksApp extends React.Component {
   }
 
   /**
-   * @description Atualiza o state com as estantes do usuário 
-   * @param   {Object} lista das estantes do usuário com seus livros
-   */
+  * @description
+  * Recebe uma lista de estantes e atualiza o estado da aplicação 
+  * 
+  * @param   {Array}  shelfs Estantes
+  */
   end = (shelfs) => {
     this.setState({shelfs,loading:false});
   }
   
   /**
-     * @description Atualiza a estante de um livro específico e gera novamente o objeto que representa todas as estantes e atualiza o State
-     * @param   {Object} book objeto que representa um livro a ser atualizado
-     * @param   {Event} event objeto do evento responsável pela atualização da estante do livro em questão
+     * @description 
+     * Recebe um livro e o evento que representa a mudança do livro de estante e executa a troca para a nova estante
+     * chamando a API e também atualizando o estado da aplicação
+     * 
+     * @param   {Object} book Livro
+     * @param   {Event} event Evento 
   */
   onChangeBookShelf = (book,event) => {
       event.preventDefault();
@@ -97,9 +105,7 @@ class BooksApp extends React.Component {
       })
       
   }
-  
 
-  /* Methods to bind Shelf*/ 
 
   render() {
     return (

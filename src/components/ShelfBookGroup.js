@@ -8,13 +8,15 @@ import If from "./If"
 
 
 /**
-* @description Representa um agrupamento de Estantes
+* @description 
+* Representa a lista de Estantes que compreende a página inicial da Aplicação
 * @constructor
-* @param {Array} shelfs -  Lista de estantes
-* @param {Array} options - Opções de estantes para a troca do livro
-* @param {Function} onChangeBookShelf - Função responsável por atualizar a estante de um livro
-* @param {boolean} loading - Parâmetro que indica se a app está processando as informações
+* @param {Array}    shelfs              Lista de estantes
+* @param {Array}    options             Lista de estantes para adição/troca de um livro
+* @param {Function} onChangeBookShelf   Função responsável por efetuar a adição/troca do livro para uma estante
+* @param {boolean}  loading             Indica se a app está processando as informações
 */
+
 const ShelfBookGroup = ({shelfs,options,onChangeBookShelf,loading})=> {
    return (
         <div className="list-books">

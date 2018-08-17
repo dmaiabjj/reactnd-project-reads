@@ -3,11 +3,13 @@ import ShelfBookChanger from "./ShelfBookChanger"
 import PropTypes from 'prop-types';
 
 /**
-* @description Representa um livro
+* @description 
+* Componente que representa a unidade de um livro
+*
 * @constructor
-* @param {Object} book -  Representa um livro
-* @param {Array} options - Opções de estantes para a troca do livro
-* @param {Function} onChangeBookShelf - Função responsável por atualizar a estante de um livro
+* @param {Object} book                  Objeto que representa um livro
+* @param {Array} options                Lista de estantes para adição/troca de um livro
+* @param {Function} onChangeBookShelf   Função responsável por efetuar a adição/troca do livro para uma estante
 */
 const Book = ({book,options, onChangeBookShelf}) => {
     const dStyle = {

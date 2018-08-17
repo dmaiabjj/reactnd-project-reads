@@ -3,11 +3,13 @@ import Book from "./Book"
 import PropTypes from 'prop-types';
 
 /**
-* @description Representa o grid de livros
+* @description 
+* Componente que representa a coleção de livros
+*
 * @constructor
-* @param {Object} shelf -  Representa a estante
-* @param {Array} options - Opções de estantes para a troca do livro
-* @param {Function} onChangeBookShelf - Função responsável por atualizar a estante de um livro
+* @param {Array} books                  Lista de livros
+* @param {Array} options                Lista de estantes para adição/troca de um livro
+* @param {Function} onChangeBookShelf   Função responsável por efetuar a adição/troca do livro para uma estante
 */
 const BookGrid = ({books,options, onChangeBookShelf})=> {
     return (
