@@ -1,18 +1,19 @@
-import React from "react"
-import If from "../../components/If"
+import React from 'react'
+import If from '../../components/If'
 
-describe("[Component] If",() => {
+
+
+describe('[Component] If', () => {
     const test      = false;
-    const children  = () => <p>Children</p>;
-    const component = () => <p>Component</p>;
+    const children  = <div>Children</div>
+    const component = <div>Component</div>
+    
+    it('shallow renders correctly', () => {
+        expect(shallow(<If test={test} children={children} component={component}/>))
+    })
 
-    it("returns children if test is false", () => {
-        const wrapper = shallow(
-            <If test={test} component={component}>
-                {children}
-            </If>
-        );
+    it('returns children if test is false', () => {
+        const wrapper = shallow(<If test={test} children={children} component={component}/>);
         expect(wrapper).toBe(children);
-
     })
 })

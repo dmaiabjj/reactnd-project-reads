@@ -6,7 +6,4 @@ configure({ adapter: new Adapter() });
 global.mount    = mount;
 global.render   = render
 global.shallow  = shallow
-
-global.localStore = {
-
-}
+global.localStorage = { getItem: jest.fn(), setItem: jest.fn() }

@@ -6,9 +6,9 @@ import PropTypes from 'prop-types';
 * @constructor
 *
 * @constructor
-* @param {boolean} test      Resultado do test
-* @param {Array} children    Children do componente 
-* @param {Object} component  Componente 
+* @param {boolean} test         Resultado do test
+* @param {Any} children         Children do componente 
+* @param {Any} component        Componente 
 */
 
 const If = ({ test, children, component }) => (test ? component : children);

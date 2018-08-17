@@ -11,10 +11,9 @@ import Alert from "../components/Alert"
 * @param {Array} options                Lista de estantes para adição/troca de um livro
 * @param {boolean}  error               True - Se aconteceu um erro | False - Se não houve um erro
 * @param {Function} onChangeBookShelf   Função responsável por efetuar a adição/troca do livro para uma estante
-* @param {Function} onClickAlert        Função reponsável por fechar o Alert
+* @param {Function} onClickAlert        Função reponsável por fechar o Alert de erro
 */
 const BookGrid = ({books,options,error, onChangeBookShelf,onClickAlert})=> {
-    console.log(error);
     return (
         <div>
             <ol className="books-grid">
