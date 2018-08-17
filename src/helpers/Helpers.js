@@ -7,4 +7,4 @@
 *
 * @returns {Object}     Valor final gerado após a execução da composição entre as funções
 */
-export const pipe    = (...fns) => x => fns.reduce((v, f) => f(v), x)
+export const pipe    = (...fns) => x => fns.reduce((v, f) => f(v), x);

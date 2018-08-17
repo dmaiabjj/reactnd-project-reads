@@ -13,7 +13,8 @@ class BooksApp extends React.Component {
  state = {
     shelfs  : [],
     options : [],
-    loading : true
+    loading : true,
+    error   : false
   };
 
   /* Life Cycle Events*/ 
@@ -32,12 +33,12 @@ class BooksApp extends React.Component {
       return {
         id: s.id,
         name: s.name
-      }
+      };
     });
 
-    this.setState({shelfs,options,loading:false})
+    this.setState({shelfs,options,loading:false});
    });
-  }
+  };
 
   /**
    * @description 
@@ -47,7 +48,7 @@ class BooksApp extends React.Component {
    */
   getBooks = () => {
     return _.flatMap(this.state.shelfs.map(s => s.books));
-  }
+  };
 
   /**
   * @description 
@@ -60,7 +61,7 @@ class BooksApp extends React.Component {
   */
   bind = (books) => {
     return bindShelfs(books);
-  }
+  };
 
   /**
    * @description 
@@ -74,7 +75,7 @@ class BooksApp extends React.Component {
     return function(books) {
       return books.filter(b => b.id !== book.id).concat(book);
     };
-  }
+  };
 
   /**
   * @description
@@ -84,7 +85,7 @@ class BooksApp extends React.Component {
   */
   end = (shelfs) => {
     this.setState({shelfs,loading:false});
-  }
+  };
   
   /**
      * @description 
@@ -96,26 +97,45 @@ class BooksApp extends React.Component {
   */
   onChangeBookShelf = (book,event) => {
       event.preventDefault();
-      this.setState({loading:true});
       const shelf = event.target.value;
-      BooksAPI.update(book,shelf).then(() => {
-        book.shelf   = shelf;
-        const filter = this.filterBook(book)
-        pipe(filter,this.bind,this.end)(this.getBooks())
-      })
       
-  }
+      book.shelf   = shelf;
+      const filter = this.filterBook(book);
+      pipe(filter,this.bind,this.end)(this.getBooks());
+      
+      BooksAPI.update(book,shelf).then(() => {
 
+      }).catch(() => {
+        this.onErrorOccurred();
+      });
+      
+  };
+
+  /**
+     * @description 
+     * Fecha a caixa de diálogo que informa que um erro ocorreu
+  */
+  onClickAlert = (t) => {
+    this.setState({error : false})
+  };
+
+   /**
+     * @description 
+     * Fecha a caixa de diálogo que informa que um erro ocorreu
+  */
+  onErrorOccurred = () => {
+    this.setState({error : true, loading:false})
+  };
 
   render() {
     return (
       <div className="app">
         <Route exact path="/" render={() => 
-          <ShelfBookGroup shelfs={this.state.shelfs} options={this.state.options} loading={this.state.loading} onChangeBookShelf={this.onChangeBookShelf} />
+          <ShelfBookGroup shelfs={this.state.shelfs} options={this.state.options} loading={this.state.loading} error={this.state.error} onChangeBookShelf={this.onChangeBookShelf} onClickAlert={this.onClickAlert} />
         }
         />
         <Route exact path="/add" render={() => 
-          <SearchBookContainer collection={this.getBooks} onChangeBookShelf={this.onChangeBookShelf} options={this.state.options}/>
+          <SearchBookContainer collection={this.getBooks} options={this.state.options} error={this.state.error} onChangeBookShelf={this.onChangeBookShelf} onClickAlert={this.onClickAlert} onErrorOccurred={this.onErrorOccurred} />
         }
         />
         </div>

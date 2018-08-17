@@ -14,13 +14,16 @@ import PropTypes from 'prop-types';
 * @param {Array}    options             Lista de estantes para adição/troca de um livro
 * @param {Function} onChangeBookShelf   Função responsável por efetuar a adição/troca do livro para uma estante
 * @param {Function} onInputSearchChange Função responsável por atualizar a query e fazer a busca na API
+* @param {Function} onClickAlert        Função reponsável por fechar o Alert
 * @param {String}   query               Termo a ser procurado na API de busca
 * @param {boolean}  loading             Indica se a app está processando as informações
+* @param {boolean}  error               True - Se aconteceu um erro | False - Se não houve um erro
 */
 
-const SearchBook = ({books,options,onChangeBookShelf,onInputSearchChange,query,loading}) =>
+const SearchBook = ({books,options,onChangeBookShelf,onInputSearchChange,onClickAlert,query,loading,error}) =>
 {
   return (
+     
         <div className="search-books">
             <div className="search-books-bar">
              <Link className="close-search" to="/">Close</Link>
@@ -30,7 +33,7 @@ const SearchBook = ({books,options,onChangeBookShelf,onInputSearchChange,query,l
             </div>
             <div className="search-books-results">
             <If test={loading} component={ <LinearProgress/>}>
-              <BookGrid books={books} options={options} onChangeBookShelf={onChangeBookShelf}/>
+              <BookGrid books={books} options={options} onChangeBookShelf={onChangeBookShelf} onClickAlert={onClickAlert} error={error}/>
             </If>
             </div>
         </div>
@@ -43,7 +46,9 @@ SearchBook.propTypes = {
   onChangeBookShelf: PropTypes.func.isRequired,
   onInputSearchChange: PropTypes.func.isRequired,
   query: PropTypes.string.isRequired,
-  loading: PropTypes.bool.isRequired
+  loading: PropTypes.bool.isRequired,
+  error  : PropTypes.bool.isRequired,
+  onClickAlert: PropTypes.func.isRequired
 }
 
 export default SearchBook

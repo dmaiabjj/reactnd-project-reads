@@ -18,7 +18,7 @@ const ShelfBookChanger = ({book,options,onChangeBookShelf})=>{
                 <option value="move" disabled>Move to...</option>
                 {
                     options.map(option => {
-                        return <option key={option.id} value={option.id}>{option.name}</option>
+                        return <option key={option.id} value={option.id}>{option.name}</option>;
                     })
                 }
                 <option value="none">None</option>

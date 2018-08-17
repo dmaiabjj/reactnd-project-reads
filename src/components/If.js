@@ -16,7 +16,7 @@ const If = ({ test, children, component }) => (test ? component : children);
 If.propTypes = {
     test: PropTypes.bool.isRequired,
     children: PropTypes.any.isRequired,
-    component: PropTypes.object.isRequired,
+    component: PropTypes.any.isRequired,
 }
 
 export default If;

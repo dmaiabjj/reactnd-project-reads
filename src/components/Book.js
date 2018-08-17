@@ -16,7 +16,7 @@ const Book = ({book,options, onChangeBookShelf}) => {
         width: 128,
         height: 174,
         backgroundImage: `url(${book.image})`
-    }
+    };
 
     return (
         <div className="book">

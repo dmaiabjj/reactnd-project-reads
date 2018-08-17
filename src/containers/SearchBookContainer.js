@@ -12,12 +12,19 @@ import { pipe } from "../helpers/Helpers"
 * o componente SearchBook que é responsável pela visualização da busca
 * @constructor
 * @param {Function} collection          Função que retornará a coleção de livros contidas nas estantes padrões
-* @param {Function} onChangeBookShelf   Função responsável por efetuar a adição/troca do livro para uma estante
-* @param {Array} options                Lista de estantes para adição/troca de um livro
+* @param {Array}    options             Lista de estantes para adição/troca de um livro
+* @param {Function} onChangeBookShelf   Função responsável por efetuar a adição/troca do livro para uma estante* 
+* @param {Function} onClickAlert        Função reponsável por fechar o Alert de erro
+* @param {Function} onErrorOccurred     Função reponsável por abrir o Alert de erro
+* @param {boolean}  error               True - Se aconteceu um erro | False - Se não houve um erro
 */
 class SearchBookContainer extends React.Component {
 
-    state = { query: "",books:[],loading : false };
+    state = { 
+        query: "",
+        books:[],
+        loading : false
+    };
     
     /**
     * @description 
@@ -35,8 +42,9 @@ class SearchBookContainer extends React.Component {
             const intersection = _.intersectionBy(collection, books, 'id');
             books = _.unionBy(intersection,books,'id');
             this.setState({books,loading:false});
-        }).catch((error) => {
-            console.log("Error",error);
+        }).catch(() => {
+            this.setState({loading:false});
+            this.props.onErrorOccurred();
         });
     }, 100);
 
@@ -53,7 +61,7 @@ class SearchBookContainer extends React.Component {
     isEmpty = (query) => {
         !_.isEmpty(query) || this.setState({query,loading:false,books:[]});
         return query;
-    }
+    };
 
     /**
     * @description 
@@ -64,7 +72,7 @@ class SearchBookContainer extends React.Component {
     */
     hasValue = (query) => {
         _.isEmpty(query) || this.searchQuery(query);
-    }
+    };
 
 
     /**
@@ -77,7 +85,7 @@ class SearchBookContainer extends React.Component {
         event.preventDefault();
         const query = event.target.value;
         pipe(this.isEmpty,this.hasValue)(query);
-    }
+    };
     
     render() {
         return <SearchBook {...this.state} onInputSearchChange={this.onInputSearchChange} {...this.props}/>
@@ -87,7 +95,10 @@ class SearchBookContainer extends React.Component {
   SearchBookContainer.propTypes = {
     collection: PropTypes.func.isRequired,
     onChangeBookShelf: PropTypes.func.isRequired,
-    options: PropTypes.array.isRequired
+    options: PropTypes.array.isRequired,
+    error  : PropTypes.bool.isRequired,
+    onClickAlert: PropTypes.func.isRequired,
+    onErrorOccurred: PropTypes.func.isRequired
 }
 
 export default SearchBookContainer
