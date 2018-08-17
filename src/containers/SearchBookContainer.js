@@ -105,7 +105,7 @@ class SearchBookContainer extends React.Component {
                 onClickAlert={this.props.onClickAlert}
                 query={this.state.query}
                 loading={this.state.loading}
-                error={this.state.error}
+                error={this.props.error}
             />
     }
 }
