@@ -131,11 +131,25 @@ class BooksApp extends React.Component {
     return (
       <div className="app">
         <Route exact path="/" render={() => 
-          <ShelfBookGroup shelfs={this.state.shelfs} options={this.state.options} loading={this.state.loading} error={this.state.error} onChangeBookShelf={this.onChangeBookShelf} onClickAlert={this.onClickAlert} />
+          <ShelfBookGroup 
+            shelfs={this.state.shelfs} 
+            options={this.state.options} 
+            loading={this.state.loading} 
+            error={this.state.error} 
+            onChangeBookShelf={this.onChangeBookShelf} 
+            onClickAlert={this.onClickAlert} 
+          />
         }
         />
         <Route exact path="/add" render={() => 
-          <SearchBookContainer collection={this.getBooks} options={this.state.options} error={this.state.error} onChangeBookShelf={this.onChangeBookShelf} onClickAlert={this.onClickAlert} onErrorOccurred={this.onErrorOccurred} />
+          <SearchBookContainer 
+            collection={this.getBooks} 
+            options={this.state.options} 
+            error={this.state.error} 
+            onChangeBookShelf={this.onChangeBookShelf} 
+            onClickAlert={this.onClickAlert} 
+            onErrorOccurred={this.onErrorOccurred} 
+          />
         }
         />
         </div>

@@ -1,4 +1,12 @@
 import PropTypes from 'prop-types';
+
+
+const propTypes = {
+    test        : PropTypes.bool.isRequired,
+    children    : PropTypes.any.isRequired,
+    component   : PropTypes.any.isRequired,
+};
+
 /**
 * @description 
 * Componente que representacional da condicional IF.
@@ -11,12 +19,10 @@ import PropTypes from 'prop-types';
 * @param {Any} component        Componente 
 */
 
-const If = ({ test, children, component }) => (test ? component : children);
-
-If.propTypes = {
-    test: PropTypes.bool.isRequired,
-    children: PropTypes.any.isRequired,
-    component: PropTypes.any.isRequired,
+function If({ test, children, component }){
+    return (test ? component : children);
 }
+
+If.propTypes = propTypes;
 
 export default If;

@@ -6,6 +6,14 @@ import PropTypes from 'prop-types';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import If from "./If"
 
+const propTypes = {
+    shelfs              : PropTypes.array.isRequired,
+    options             : PropTypes.array.isRequired,
+    onChangeBookShelf   : PropTypes.func.isRequired,
+    loading             : PropTypes.bool.isRequired,
+    error               : PropTypes.bool.isRequired,
+    onClickAlert        : PropTypes.func.isRequired
+};
 
 /**
 * @description 
@@ -19,7 +27,7 @@ import If from "./If"
 * @param {Function} onClickAlert        Função reponsável por fechar o Alert
 */
 
-const ShelfBookGroup = ({shelfs,options,loading,error,onChangeBookShelf,onClickAlert})=> {
+function ShelfBookGroup({shelfs,options,loading,error,onChangeBookShelf,onClickAlert}) {
    return (
         <div className="list-books">
             <div className="list-books-title">
@@ -30,24 +38,24 @@ const ShelfBookGroup = ({shelfs,options,loading,error,onChangeBookShelf,onClickA
                     <If test={loading} component={ <LinearProgress/>}>
                     {
                         _.orderBy(shelfs, ['order']).map(shelf => {
-                            return <ShelfBook key={shelf.id} shelf={shelf} options={options} error={error} onChangeBookShelf={onChangeBookShelf} onClickAlert={onClickAlert}/>
+                            return <ShelfBook 
+                                        key={shelf.id} 
+                                        shelf={shelf} 
+                                        options={options} 
+                                        error={error} 
+                                        onChangeBookShelf={onChangeBookShelf} 
+                                        onClickAlert={onClickAlert}
+                                    />
                         })
                     }
                     </If>
                 </div>
             </div>
-            <AddBook/>
+            <AddBook />
         </div>
     )
 }
 
-ShelfBookGroup.propTypes = {
-    shelfs: PropTypes.array.isRequired,
-    options: PropTypes.array.isRequired,
-    onChangeBookShelf: PropTypes.func.isRequired,
-    loading: PropTypes.bool.isRequired,
-    error  : PropTypes.bool.isRequired,
-    onClickAlert: PropTypes.func.isRequired
-}
+ShelfBookGroup.propTypes = propTypes;
 
 export default ShelfBookGroup

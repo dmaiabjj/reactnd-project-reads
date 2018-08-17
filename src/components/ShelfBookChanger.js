@@ -1,6 +1,13 @@
 import React from "react"
 import PropTypes from 'prop-types';
 
+
+const propTypes = {
+    book                : PropTypes.object.isRequired,
+    options             : PropTypes.array.isRequired,
+    onChangeBookShelf   : PropTypes.func.isRequired,
+};
+
 /**
 * @description 
 * Representa a o componente responsável pela adição/troca de um livro para uma estante
@@ -11,7 +18,7 @@ import PropTypes from 'prop-types';
 * @param {Function} onChangeBookShelf   Função responsável por efetuar a adição/troca do livro para uma estante
 */
 
-const ShelfBookChanger = ({book,options,onChangeBookShelf})=>{
+function ShelfBookChanger({book,options,onChangeBookShelf}) {
     return (
         <div className="book-shelf-changer">
             <select value={book.shelf || "none"} onChange={(e) => {onChangeBookShelf(book,e)}}>
@@ -27,10 +34,6 @@ const ShelfBookChanger = ({book,options,onChangeBookShelf})=>{
     )
 }
 
-ShelfBookChanger.propTypes = {
-    book: PropTypes.object.isRequired,
-    options: PropTypes.array.isRequired,
-    onChangeBookShelf: PropTypes.func.isRequired,
-}
+ShelfBookChanger.propTypes = propTypes;
 
 export default ShelfBookChanger

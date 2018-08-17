@@ -3,6 +3,14 @@ import BookGrid from "./BookGrid"
 import PropTypes from 'prop-types';
 
 
+const propTypes = {
+    shelf               : PropTypes.object.isRequired,
+    options             : PropTypes.array.isRequired,
+    onChangeBookShelf   : PropTypes.func.isRequired,
+    error               : PropTypes.bool.isRequired,
+    onClickAlert        : PropTypes.func.isRequired
+};
+
 /**
 * @description 
 * Representa a unidade Estante
@@ -15,24 +23,24 @@ import PropTypes from 'prop-types';
 * @param {Function} onClickAlert        Função reponsável por fechar o Alert
 */
 
-const ShelfBook = ({shelf,options,error, onChangeBookShelf,onClickAlert})=> {
+function ShelfBook({shelf,options,error, onChangeBookShelf,onClickAlert}) {
     return (
         <div className="bookshelf">
             <h2 className="bookshelf-title">{shelf.name}</h2>
             <div className="bookshelf-books">
-            <BookGrid books={shelf.books} options={options} error={error} onChangeBookShelf={onChangeBookShelf} onClickAlert={onClickAlert}/>
+            <BookGrid 
+                books={shelf.books} 
+                options={options} 
+                error={error} 
+                onChangeBookShelf={onChangeBookShelf} 
+                onClickAlert={onClickAlert}
+            />
             </div>
         </div>
         
     )
 }
 
-ShelfBook.propTypes = {
-    shelf: PropTypes.object.isRequired,
-    options: PropTypes.array.isRequired,
-    onChangeBookShelf: PropTypes.func.isRequired,
-    error  : PropTypes.bool.isRequired,
-    onClickAlert: PropTypes.func.isRequired
-}
+ShelfBook.propTypes = propTypes;
 
 export default ShelfBook

@@ -5,6 +5,18 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import If from "../components/If"
 import PropTypes from 'prop-types';
 
+
+const propTypes = {
+  books               : PropTypes.array.isRequired,
+  options             : PropTypes.array.isRequired,
+  onChangeBookShelf   : PropTypes.func.isRequired,
+  onInputSearchChange : PropTypes.func.isRequired,
+  query               : PropTypes.string.isRequired,
+  loading             : PropTypes.bool.isRequired,
+  error               : PropTypes.bool.isRequired,
+  onClickAlert        : PropTypes.func.isRequired
+};
+
 /**
 * @description 
 * Componente que representa a página de busca
@@ -20,8 +32,7 @@ import PropTypes from 'prop-types';
 * @param {boolean}  error               True - Se aconteceu um erro | False - Se não houve um erro
 */
 
-const SearchBook = ({books,options,onChangeBookShelf,onInputSearchChange,onClickAlert,query,loading,error}) =>
-{
+function SearchBook({books,options,onChangeBookShelf,onInputSearchChange,onClickAlert,query,loading,error}) {
   return (
      
         <div className="search-books">
@@ -32,23 +43,20 @@ const SearchBook = ({books,options,onChangeBookShelf,onInputSearchChange,onClick
               </div>
             </div>
             <div className="search-books-results">
-            <If test={loading} component={ <LinearProgress/>}>
-              <BookGrid books={books} options={options} onChangeBookShelf={onChangeBookShelf} onClickAlert={onClickAlert} error={error}/>
+            <If test={loading} component={ <LinearProgress />}>
+              <BookGrid 
+                books={books} 
+                options={options} 
+                onChangeBookShelf={onChangeBookShelf} 
+                onClickAlert={onClickAlert} 
+                error={error}
+              />
             </If>
             </div>
         </div>
     )
 }
 
-SearchBook.propTypes = {
-  books: PropTypes.array.isRequired,
-  options: PropTypes.array.isRequired,
-  onChangeBookShelf: PropTypes.func.isRequired,
-  onInputSearchChange: PropTypes.func.isRequired,
-  query: PropTypes.string.isRequired,
-  loading: PropTypes.bool.isRequired,
-  error  : PropTypes.bool.isRequired,
-  onClickAlert: PropTypes.func.isRequired
-}
+SearchBook.propTypes = propTypes;
 
 export default SearchBook

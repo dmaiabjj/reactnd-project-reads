@@ -7,6 +7,10 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import PropTypes from 'prop-types';
 
+const propTypes = {
+  error         : PropTypes.bool.isRequired,
+  onClickAlert  : PropTypes.func.isRequired
+};
 
 /**
 * @description 
@@ -18,8 +22,7 @@ import PropTypes from 'prop-types';
 * @param {Function} onClickAlert   Função reponsável por fechar o Alert
 */
 
-const AlertDialog = ({error,onClickAlert}) => {
-  
+function AlertDialog({error,onClickAlert}) {
   return (
       <div>
         <Dialog
@@ -46,9 +49,6 @@ const AlertDialog = ({error,onClickAlert}) => {
  
 }
 
-AlertDialog.propTypes = {
-    error  : PropTypes.bool.isRequired,
-    onClickAlert: PropTypes.func.isRequired
-}
+AlertDialog.propTypes = propTypes;
 
 export default AlertDialog;

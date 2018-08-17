@@ -6,6 +6,15 @@ import {transformBook} from "../utils/Util"
 import _ from "lodash"
 import { pipe } from "../helpers/Helpers"
 
+
+const propTypes = {
+    collection          : PropTypes.func.isRequired,
+    onChangeBookShelf   : PropTypes.func.isRequired,
+    options             : PropTypes.array.isRequired,
+    error               : PropTypes.bool.isRequired,
+    onClickAlert        : PropTypes.func.isRequired,
+    onErrorOccurred     : PropTypes.func.isRequired
+};
 /**
 * @description 
 * Componente statefull responsável por controlar o estado da aplicação referente a página de busca e renderizar
@@ -88,17 +97,19 @@ class SearchBookContainer extends React.Component {
     };
     
     render() {
-        return <SearchBook {...this.state} onInputSearchChange={this.onInputSearchChange} {...this.props}/>
+        return <SearchBook 
+                books={this.state.books} 
+                options={this.props.options}
+                onChangeBookShelf={this.props.onChangeBookShelf}
+                onInputSearchChange={this.onInputSearchChange} 
+                onClickAlert={this.props.onClickAlert}
+                query={this.state.query}
+                loading={this.state.loading}
+                error={this.state.error}
+            />
     }
-  }
-
-  SearchBookContainer.propTypes = {
-    collection: PropTypes.func.isRequired,
-    onChangeBookShelf: PropTypes.func.isRequired,
-    options: PropTypes.array.isRequired,
-    error  : PropTypes.bool.isRequired,
-    onClickAlert: PropTypes.func.isRequired,
-    onErrorOccurred: PropTypes.func.isRequired
 }
+
+SearchBookContainer.propTypes = propTypes;
 
 export default SearchBookContainer

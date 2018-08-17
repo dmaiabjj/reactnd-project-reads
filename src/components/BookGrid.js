@@ -2,6 +2,16 @@ import React from "react"
 import Book from "./Book"
 import PropTypes from 'prop-types';
 import Alert from "../components/Alert"
+
+
+const propTypes = {
+    books               : PropTypes.array.isRequired,
+    options             : PropTypes.array.isRequired,
+    onChangeBookShelf   : PropTypes.func.isRequired,
+    error               : PropTypes.bool.isRequired,
+    onClickAlert        : PropTypes.func.isRequired
+};
+
 /**
 * @description 
 * Componente que representa a coleção de livros
@@ -13,7 +23,7 @@ import Alert from "../components/Alert"
 * @param {Function} onChangeBookShelf   Função responsável por efetuar a adição/troca do livro para uma estante
 * @param {Function} onClickAlert        Função reponsável por fechar o Alert de erro
 */
-const BookGrid = ({books,options,error, onChangeBookShelf,onClickAlert})=> {
+function BookGrid({books,options,error, onChangeBookShelf,onClickAlert}) {
     return (
         <div>
             <ol className="books-grid">
@@ -21,7 +31,12 @@ const BookGrid = ({books,options,error, onChangeBookShelf,onClickAlert})=> {
                     books.map(book => {
                         return (
                                 <li key={book.id}>
-                                    <Book key={book.id} book={book} options={options} onChangeBookShelf={onChangeBookShelf}/>
+                                    <Book 
+                                        key={book.id} 
+                                        book={book} 
+                                        options={options} 
+                                        onChangeBookShelf={onChangeBookShelf}
+                                    />
                                 </li>
                         );
                     })
@@ -33,12 +48,6 @@ const BookGrid = ({books,options,error, onChangeBookShelf,onClickAlert})=> {
     )
 }
 
-BookGrid.propTypes = {
-    books: PropTypes.array.isRequired,
-    options: PropTypes.array.isRequired,
-    onChangeBookShelf: PropTypes.func.isRequired,
-    error  : PropTypes.bool.isRequired,
-    onClickAlert: PropTypes.func.isRequired
-}
+BookGrid.propTypes = propTypes;
 
 export default BookGrid
