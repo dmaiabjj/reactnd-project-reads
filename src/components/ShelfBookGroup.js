@@ -5,6 +5,7 @@ import _ from "lodash"
 import PropTypes from 'prop-types';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import If from "./If"
+import Alert from "./Alert"
 
 const propTypes = {
     shelfs              : PropTypes.array.isRequired,
@@ -42,15 +43,14 @@ function ShelfBookGroup({shelfs,options,loading,error,onChangeBookShelf,onClickA
                                         key={shelf.id} 
                                         shelf={shelf} 
                                         options={options} 
-                                        error={error} 
                                         onChangeBookShelf={onChangeBookShelf} 
-                                        onClickAlert={onClickAlert}
                                     />
                         })
                     }
                     </If>
                 </div>
             </div>
+            <Alert error={error} onClickAlert={onClickAlert}/>
             <AddBook />
         </div>
     )

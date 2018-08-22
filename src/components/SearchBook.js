@@ -4,7 +4,7 @@ import BookGrid from "./BookGrid"
 import LinearProgress from '@material-ui/core/LinearProgress';
 import If from "../components/If"
 import PropTypes from 'prop-types';
-
+import Alert from "./Alert"
 
 const propTypes = {
   books               : PropTypes.array.isRequired,
@@ -48,10 +48,9 @@ function SearchBook({books,options,onChangeBookShelf,onInputSearchChange,onClick
                 books={books} 
                 options={options} 
                 onChangeBookShelf={onChangeBookShelf} 
-                onClickAlert={onClickAlert} 
-                error={error}
               />
             </If>
+            <Alert error={error} onClickAlert={onClickAlert}/>
             </div>
         </div>
     )

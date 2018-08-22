@@ -37,7 +37,9 @@ class BooksApp extends React.Component {
     });
 
     this.setState({shelfs,options,loading:false});
-   });
+   }).catch(() => {
+      this.onErrorOccurred();
+    });
   };
 
   /**

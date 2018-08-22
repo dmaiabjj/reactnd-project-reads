@@ -7,3 +7,6 @@ global.mount    = mount;
 global.render   = render
 global.shallow  = shallow
 global.localStorage = { getItem: jest.fn(), setItem: jest.fn() }
+
+
+

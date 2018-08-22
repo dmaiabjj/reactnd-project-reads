@@ -20,6 +20,7 @@ export const get = (bookId) =>
 export const getAll = () =>
   fetch(`${api}/books`, { headers })
     .then(res => res.json())
+    //.then(() => {throw "Parameter is not a number!"});
     .then(data => data.books)
 
 export const update = (book, shelf) =>
@@ -41,4 +42,7 @@ export const search = (query) =>
     },
     body: JSON.stringify({ query })
   }).then(res => res.json())
-    .then(data => data.books)
+  //.then(() => {throw "Parameter is not a number!"});
+  .then(data => data.books)
+  
+    
