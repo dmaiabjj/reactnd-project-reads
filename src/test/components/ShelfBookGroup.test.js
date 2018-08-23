@@ -82,14 +82,36 @@ describe('[Component] ShelfBookGroup', () => {
             {id:"read",name:"Read"}
         ],
         onChangeBookShelf : jest.fn(),
-        onClickAlert : jest.fn(),
-        loading: false,
-        error:false
+        onClickAlert : jest.fn()
         
-    }
+    };
+
+    const context   = new ReactRouterEnzymeContext();
+    let loading     = false;
+    let error       = false;
     
     it('Shallow renders correctly', () => {
-        expect(shallow(<ShelfBookGroup {...props}></ShelfBookGroup>));
+        expect(shallow(<ShelfBookGroup error={error} loading={loading} {...props}></ShelfBookGroup>));
+    });
+
+    it('Expect to find Alert,AddBook and If Components nested', () => {
+        const wrapper = shallow(<ShelfBookGroup error={error} loading={loading} {...props}></ShelfBookGroup>,context.get());
+        expect(wrapper.containsMatchingElement(AddBook)).toBeTruthy();
+        expect(wrapper.containsMatchingElement(Alert)).toBeTruthy();
+        expect(wrapper.containsMatchingElement(If)).toBeTruthy();
+        expect(wrapper.containsMatchingElement(LinearProgress)).toBeTruthy();
+    });
+
+    it('If loading is true expect to exists LinearProgress Component nested', () => {
+        loading = true;
+        const wrapper = mount(<ShelfBookGroup error={error} loading={loading} {...props}></ShelfBookGroup>,context.get());
+        expect(wrapper.find(LinearProgress)).toHaveLength(1);
+    });
+
+    it('If loading is false expect to exists ShelfBook Components nested', () => {
+        loading = false;
+        const wrapper = mount(<ShelfBookGroup error={error} loading={loading} {...props}></ShelfBookGroup>,context.get());
+        expect(wrapper.find(ShelfBook)).toHaveLength(props.shelfs.length);
     });
 
 

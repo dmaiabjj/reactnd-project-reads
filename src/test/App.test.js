@@ -1,13 +1,12 @@
 import React from "react"
-import ReactDOM from "react-dom"
 import App from "../App"
-
+import ReactRouterEnzymeContext from 'react-router-enzyme-context'
 
 describe('[Component] App', () => {
-  
+  const context   = new ReactRouterEnzymeContext();
  
-  xit('Shallow renders correctly', () => {
-      expect(shallow(<App></App>));
+  it('Shallow renders correctly', () => {
+    expect(shallow(<App/>,context.get()));
   });
 
 

@@ -10,11 +10,6 @@ describe('[Component] AddBook', () => {
         expect(shallow(<AddBook />));
     });
 
-    it('Mount renders correctly', () => {
-        const wrapper = mount(<AddBook />,context.get());
-        expect(wrapper).toMatchSnapshot();
-    });
-
     it('Expect to find a Link inside', () => {
         const wrapper = mount(<AddBook/>,context.get());
         expect(wrapper.find(Link)).toHaveLength(1);
